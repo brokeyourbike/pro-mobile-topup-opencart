@@ -1,6 +1,6 @@
 <?php
 
-$_['pro_topup'] = array(
+$_['pro_mobile_topup'] = array(
     'status'            => false,
     'debug'             => true,
     'currency_code'     => 'GBP',
