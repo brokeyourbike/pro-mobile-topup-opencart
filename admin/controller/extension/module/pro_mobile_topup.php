@@ -20,6 +20,7 @@ class ControllerExtensionModuleProMobileTopup extends Controller
 
         $this->load->model($this->route);
         $this->load->model('extension/pro_patch/url');
+        $this->load->model('extension/pro_patch/json');
         $this->load->model('extension/pro_patch/load');
         $this->load->model('extension/pro_patch/user');
         $this->load->model('extension/pro_patch/setting');
@@ -27,8 +28,7 @@ class ControllerExtensionModuleProMobileTopup extends Controller
         $this->load->model('extension/pro_patch/modification');
         $this->load->model('extension/pro_patch/language');
 
-        $this->setting = $this->model_extension_pro_patch_setting->getSetting($this->codename, $this->store_id);
-
+        $this->setting = $this->model_extension_pro_patch_setting->getSetting($this->type, $this->codename, $this->store_id);
         $this->extension_model = $this->{'model_'.str_replace("/", "_", $this->route)};
     }
 
@@ -104,6 +104,8 @@ class ControllerExtensionModuleProMobileTopup extends Controller
             'text_price',
             'text_description',
             'text_please_select_network',
+            'text_setting',
+            'text_debug',
             'button_save_and_stay',
             'button_save',
             'button_cancel',
@@ -121,9 +123,6 @@ class ControllerExtensionModuleProMobileTopup extends Controller
             'button_go_to_cart',
             'help_mobile_number',
             'error_number_not_valid',
-            'tab_setting',
-            'tab_orders',
-            'tab_topup',
         ));
 
         // BREADCRUMB
@@ -160,5 +159,53 @@ class ControllerExtensionModuleProMobileTopup extends Controller
         $state['setting']['debug'] = (bool) $state['setting']['debug'];
 
         return $state;
+    }
+
+    public function save()
+    {
+        $json = $this->model_extension_pro_patch_permission->validateRoute($this->route);
+        $parsed = $this->model_extension_pro_patch_json->parseJson(file_get_contents('php://input'));
+
+        if (isset($json['error'])) {
+            return $this->response->setOutput(json_encode($json));
+        }
+
+        if (!$parsed) {
+            $json['error'][] = $this->language->get('error_missing_data');
+            return $this->response->setOutput(json_encode($json));
+        }
+
+        if (!$this->extension_model->isProductExist($parsed['product_id'])) {
+            $json['error'][] = $this->language->get('error_product_not_exist');
+        }
+
+        $this->model_extension_pro_patch_setting->editSetting($this->type, $this->codename, $parsed, $this->store_id);
+
+        $json['success'][] = $this->language->get('success_setting_saved');
+
+        $this->model_extension_pro_patch_modification->modificationHandler($this->codename, false);
+
+        if ($parsed['status']) {
+            $this->model_extension_pro_patch_modification->modificationHandler($this->codename, true);
+        }
+
+        $this->response->setOutput(json_encode($json));
+    }
+
+    public function install()
+    {
+        $this->model_extension_pro_patch_permission->addPermission($this->codename, true);
+
+        if ($this->setting['status']) {
+            $this->model_extension_pro_patch_modification->modificationHandler($this->codename, true);
+        }
+
+        $this->extension_model->createTables();
+    }
+
+    public function uninstall()
+    {
+        $this->model_extension_pro_patch_modification->modificationHandler($this->codename, false);
+        $this->extension_model->dropTables();
     }
 }

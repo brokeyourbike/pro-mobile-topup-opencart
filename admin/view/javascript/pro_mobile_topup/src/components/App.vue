@@ -4,7 +4,7 @@
     <loading :active.sync="isLoading" :is-full-page="true" />
     <v-dialog />
 
-    <page-header :title="heading_title" :version="version">
+    <page-header :title="heading_title_main" :version="version">
       <template slot="buttons">
         <button
           @click="saveAndStayRequest"
@@ -61,7 +61,6 @@ import Setting from '@/components/Setting.vue'
 export default {
   components: {
     Loading,
-    Treeselect,
     PageHeader,
     Breadcrumbs,
     NavTabs,
@@ -70,10 +69,10 @@ export default {
     'setting-section': Setting,
   },
   computed: {
-    ...mapState('shop', [
+    ...mapState('main', [
       'breadcrumbs',
       'version',
-      'heading_title',
+      'heading_title_main',
       'button_save_and_stay',
       'button_save',
       'button_cancel',
@@ -89,10 +88,10 @@ export default {
 
   },
   created() {
-    this.$store.dispatch('shop/initData')
+    this.$store.dispatch('main/initData')
   },
   methods: {
-    ...mapActions('shop', ['saveAndStayRequest', 'saveAndGoRequest', 'postPastOrdersRequest']),
+    ...mapActions('main', ['saveAndStayRequest', 'saveAndGoRequest', 'postPastOrdersRequest']),
 
     redirectToStore(selectedData) {
       window.location.href = selectedData.href

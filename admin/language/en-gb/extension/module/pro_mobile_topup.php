@@ -11,6 +11,7 @@ $_['heading_title_main']    = "{$codename}";
 $_['text_edit']             = "Edit {$codename}";
 $_['text_home']             = 'Home';
 $_['text_module']           = 'Modules';
+$_['text_debug']            = 'Debug';
 $_['text_setting']          = 'Setting';
 $_['text_orders']           = 'Orders';
 $_['text_total_orders']     = 'Total orders:';

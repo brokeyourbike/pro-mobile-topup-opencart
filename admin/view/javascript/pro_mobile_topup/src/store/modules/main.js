@@ -1,7 +1,9 @@
-import Vue from 'vue'
 import { extend } from 'lodash'
 import { make } from 'vuex-pathify'
 import sleep from 'sleep-promise'
+
+import api from '@/plugins/api'
+import notify from '@/plugins/notify'
 
 // initial state
 const state = {
@@ -22,7 +24,7 @@ const getters = {
 // actions
 const actions = {
   initData({ commit, state }) {
-    shop.getInlineState(data => {
+    api.getInlineState(data => {
       commit('SET_DATA', data)
     })
   },
@@ -30,18 +32,18 @@ const actions = {
     commit('SET_IS_LOADING', true)
     const data = extend({}, state.setting, { url: state.save })
 
-    shop.makeRequest(data, res => {
+    api.makeRequest(data, res => {
       commit('SET_IS_LOADING', false)
-      notify.messageHandler(res.data)
+      notify.handle(res.data)
     })
   },
   saveAndGoRequest({ commit, state }) {
     commit('SET_IS_LOADING', true)
     const data = extend({}, state.setting, { url: state.save })
 
-    shop.makeRequest(data, res => {
+    api.makeRequest(data, res => {
       commit('SET_IS_LOADING', false)
-      notify.messageHandler(res.data)
+      notify.handle(res.data)
 
       sleep(1500).then(() => {
         window.location.href = state.cancel

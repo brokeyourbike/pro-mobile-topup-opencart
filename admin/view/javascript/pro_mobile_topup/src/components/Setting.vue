@@ -32,17 +32,17 @@ import { get, sync } from 'vuex-pathify'
 
 export default {
   computed: {
-    ...mapState('shop', [
+    ...mapState('main', [
       'text_status',
       'text_debug',
       'text_api_key',
       'text_api_secret',
       'text_language_code',
     ]),
-    ...mapGetters('shop', ['getToggleStates']),
+    ...mapGetters('main', ['getToggleStates']),
 
-    status: sync('shop/setting@status'),
-    debug: sync('shop/setting@debug'),
+    status: sync('main/setting@status'),
+    debug: sync('main/setting@debug'),
   },
 }
 </script>

@@ -5,7 +5,7 @@ import notify from '@/plugins/notify'
 export default {
   getInlineState(cb) {
     const codename = Vue.prototype.$codename
-    if (!isNil(window['__' + codename + '__'])) {
+    if (typeof window['__' + codename + '__'] !== 'undefined') {
       cb(window['__' + codename + '__'])
     }
   },

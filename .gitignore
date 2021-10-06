@@ -31,7 +31,8 @@ vqmod/mods.cache
 
 .DS_Store
 /node_modules
-/dist
+pro_mobile_topup/dist
+mix-manifest.json
 
 image/*
 catalog/language/en-gb/extension/shipping/pilibaba.php

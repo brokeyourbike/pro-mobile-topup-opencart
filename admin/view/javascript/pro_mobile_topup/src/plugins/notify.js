@@ -19,11 +19,11 @@ export default {
       }
     } else if (has(data, 'error') && isArray(data.error)) {
       for (let message of data.error) {
-        displayNotification(codename, 'success', message)
+        displayNotification(codename, 'warn', message)
       }
     } else if (has(data, 'info') && isArray(data.info)) {
       for (let message of data.info) {
-        displayNotification(codename, 'success', message)
+        displayNotification(codename, 'info', message)
       }
     }
   },

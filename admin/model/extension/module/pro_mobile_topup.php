@@ -22,14 +22,14 @@ class ModelExtensionModuleProMobileTopup extends Model
     public function getScriptFiles()
     {
         return array(
-            "view/javascript/{$this->codename}/dist/{$this->codename}.js"
+            "view/javascript/{$this->codename}/dist/main.js"
         );
     }
 
     public function getStyleFiles()
     {
         return array(
-            HTTPS_CATALOG . "catalog/view/javascript/{$this->codename}/dist/{$this->codename}.css"
+            // HTTPS_CATALOG . "catalog/view/javascript/{$this->codename}/dist/{$this->codename}.css"
         );
     }
 
