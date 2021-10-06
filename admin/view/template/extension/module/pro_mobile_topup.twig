@@ -1,0 +1,19 @@
+{{header}}{{column_left}}
+
+<div id="content">
+  <div id="{{codename}}"></div>
+</div>
+
+<script type="text/javascript">
+window.__{{codename}}__ = {{state}};
+</script>
+
+{% for style in styles %}
+<link href="{{style}}" rel="stylesheet" type="text/css" />
+{% endfor %}
+
+{% for script in scripts %}
+<script type="text/javascript" src="{{script}}"></script>
+{% endfor %}
+
+{{footer}}
