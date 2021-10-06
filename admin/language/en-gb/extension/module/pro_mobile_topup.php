@@ -5,7 +5,7 @@
 $codename = 'PRO Mobile Topup';
 
 // HEADING
-$_['heading_title']         = '<a href="ahoj!"></a><span style="color: #ec6ead; background: -webkit-linear-gradient(#3494e6, #ec6ead); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:bold; font-size:14px;">'.$codename.'</span><span style="font-size:12px; color:#e0e0e0;"><span style="color:#e0e0e0;"> by </span><a href="https://stasi.uk/" style="color:#e0e0e0" target="_blank">stasi.uk</a></span>';
+$_['heading_title']         = '<a href="ahoj!"></a><span style="color: #ec6ead; background: -webkit-linear-gradient(#3494e6, #ec6ead); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:bold;">'.$codename.'</span><span><span style="color:#e0e0e0;"> by </span><a href="https://stasi.uk/" style="color:#e0e0e0" target="_blank">stasi.uk</a></span>';
 $_['heading_title_main']    = "{$codename}";
 
 $_['text_edit']             = "Edit {$codename}";
