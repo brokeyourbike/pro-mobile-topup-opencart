@@ -7,6 +7,7 @@ class ModelExtensionModuleProMobileTopup extends Model
     private $codename = 'pro_mobile_topup';
     private $route = 'extension/module/pro_mobile_topup';
 
+    private $store_id = 0;
     private $setting = array();
 
     public function __construct($registry)
@@ -15,8 +16,7 @@ class ModelExtensionModuleProMobileTopup extends Model
 
         $this->load->model('extension/pro_patch/setting');
 
-        $this->setting = $this->model_extension_pro_patch_setting->getSetting($this->codename);
-        $this->pro_mobile_topup = new \pro_mobile_topup\pro_mobile_topup($this->setting);
+        $this->setting = $this->model_extension_pro_patch_setting->getSetting($this->codename, $this->store_id);
     }
 
     public function getScriptFiles()

@@ -25,8 +25,9 @@ class ControllerExtensionModuleProMobileTopup extends Controller
         $this->load->model('extension/pro_patch/setting');
         $this->load->model('extension/pro_patch/permission');
         $this->load->model('extension/pro_patch/modification');
+        $this->load->model('extension/pro_patch/language');
 
-        $this->setting = $this->model_extension_pro_patch_setting->getSetting($this->codename);
+        $this->setting = $this->model_extension_pro_patch_setting->getSetting($this->codename, $this->store_id);
 
         $this->extension_model = $this->{'model_'.str_replace("/", "_", $this->route)};
     }
