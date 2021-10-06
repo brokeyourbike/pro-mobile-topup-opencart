@@ -1,0 +1,40 @@
+name: release-please
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_release_draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: google-github-actions/release-please-action@v2
+        id: release
+        with:
+          release-type: node
+
+      - uses: actions/checkout@v2
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Prepare Ocmod
+        uses: brokeyourbike/prepare-opencart-module-action@v1
+        if: ${{ steps.release.outputs.release_created }}
+        id: prepare
+        with:
+          module-name: pro-mobile-topup-v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
+          modification-file: install.xml
+          files: admin/
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ${{ steps.prepare.outputs.output_file }}
+          asset_name: ${{ steps.prepare.outputs.output_name }}
+          asset_content_type: application/zip
