@@ -34,6 +34,8 @@ vqmod/mods.cache
 pro_mobile_topup/dist
 mix-manifest.json
 
+/admin/view/javascript/pro_mobile_topup/dist/*
+
 image/*
 catalog/language/en-gb/extension/shipping/pilibaba.php
 catalog/language/en-gb/extension/shipping/pickup.php
