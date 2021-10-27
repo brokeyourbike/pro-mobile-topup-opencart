@@ -1,14 +1,11 @@
-import { extend } from 'lodash'
+import Vue from 'vue'
 import { make } from 'vuex-pathify'
 import sleep from 'sleep-promise'
-
-import api from '@/plugins/api'
-import notify from '@/plugins/notify'
 
 // initial state
 const state = {
   setting: {},
-  isLoading: false,
+  isLoading: false
 }
 
 // getters
@@ -16,51 +13,41 @@ const getters = {
   getToggleStates: state => {
     return {
       checked: state.text_enabled,
-      unchecked: state.text_disabled,
+      unchecked: state.text_disabled
     }
-  },
+  }
 }
 
 // actions
 const actions = {
-  initData({ commit, state }) {
-    api.getInlineState(data => {
-      commit('SET_DATA', data)
-    })
+  INIT_DATA ({ commit }) {
+    const codename = Vue.prototype.$codename
+
+    if (typeof window[`__${codename}__`] === 'object') {
+      commit('SET_DATA', window[`__${codename}__`])
+    }
   },
-  saveAndStayRequest({ commit, state, dispatch }) {
+  async SAVE_AND_STAY_REQUEST ({ commit, state }) {
     commit('SET_IS_LOADING', true)
-    const data = extend({}, state.setting, { url: state.save })
-
-    api.makeRequest(data, res => {
-      commit('SET_IS_LOADING', false)
-      notify.handle(res.data)
-    })
+    await Vue.prototype.$http.post(state.save, state.setting)
+    commit('SET_IS_LOADING', false)
   },
-  saveAndGoRequest({ commit, state }) {
-    commit('SET_IS_LOADING', true)
-    const data = extend({}, state.setting, { url: state.save })
-
-    api.makeRequest(data, res => {
-      commit('SET_IS_LOADING', false)
-      notify.handle(res.data)
-
-      sleep(1500).then(() => {
-        window.location.href = state.cancel
-      })
-    })
-  },
+  async SAVE_AND_GO_REQUEST ({ dispatch, state }) {
+    await dispatch('SAVE_AND_STAY_REQUEST')
+    await sleep(1500)
+    window.location.href = state.cancel
+  }
 }
 
 // mutations
 const mutations = {
-  SET_DATA(state, data) {
-    for (let d in data) {
+  SET_DATA (state, data) {
+    for (const d in data) {
       state[d] = data[d]
     }
   },
 
-  ...make.mutations(state),
+  ...make.mutations(state)
 }
 
 export default {
@@ -68,5 +55,5 @@ export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 }

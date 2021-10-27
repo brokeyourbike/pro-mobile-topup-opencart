@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById(`${Vue.prototype.$codename}`)) {
     new Vue({
       store,
-      render: h => h(App),
+      render: h => h(App)
     }).$mount(`#${Vue.prototype.$codename}`)
   }
 })

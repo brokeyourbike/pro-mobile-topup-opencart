@@ -7,7 +7,7 @@
     <page-header :title="heading_title_main" :version="version">
       <template slot="buttons">
         <button
-          @click="saveAndStayRequest"
+          @click="SAVE_AND_STAY_REQUEST"
           data-toggle="tooltip"
           :title="button_save_and_stay"
           class="btn btn-success"
@@ -15,7 +15,7 @@
           <i class="fa fa-save" />
         </button>
         <button
-          @click="saveAndGoRequest"
+          @click="SAVE_AND_GO_REQUEST"
           data-toggle="tooltip"
           :title="button_save"
           class="btn btn-primary"
@@ -88,14 +88,10 @@ export default {
 
   },
   created() {
-    this.$store.dispatch('main/initData')
+    this.$store.dispatch('main/INIT_DATA')
   },
   methods: {
-    ...mapActions('main', ['saveAndStayRequest', 'saveAndGoRequest', 'postPastOrdersRequest']),
-
-    redirectToStore(selectedData) {
-      window.location.href = selectedData.href
-    },
+    ...mapActions('main', ['SAVE_AND_STAY_REQUEST', 'SAVE_AND_GO_REQUEST']),
   },
 }
 </script>

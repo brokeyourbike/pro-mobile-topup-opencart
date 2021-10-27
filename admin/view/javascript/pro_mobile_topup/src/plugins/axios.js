@@ -13,20 +13,26 @@ axios.interceptors.response.use(
     if (!isObject(data)) {
       notify.handle({
         error: [
-          'We detected that request have returned unexpected result. Please try again.',
-        ],
+          'We detected that request have returned unexpected result. Please try again.'
+        ]
       })
+    } else {
+      notify.handle(data)
     }
 
     return response
   },
   error => {
-    const { status } = error.response
+    const { data, status } = error.response
 
     if (status !== 200) {
       notify.handle({
-        error: ['We detected that request have returned an error.'],
+        error: ['We detected that request have returned an error.']
       })
+    }
+
+    if (isObject(data)) {
+      notify.handle(data)
     }
 
     return Promise.reject(error)

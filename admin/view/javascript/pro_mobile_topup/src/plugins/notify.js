@@ -1,30 +1,30 @@
 import Vue from 'vue'
 import { isArray, has } from 'lodash'
 
-function displayNotification(group, type, text) {
+function displayNotification (group, type, text) {
   Vue.prototype.$notify({
     group,
     type,
-    text,
+    text
   })
 }
 
 export default {
-  handle(data) {
+  handle (data) {
     const codename = Vue.prototype.$codename
 
     if (has(data, 'success') && isArray(data.success)) {
-      for (let message of data.success) {
+      for (const message of data.success) {
         displayNotification(codename, 'success', message)
       }
     } else if (has(data, 'error') && isArray(data.error)) {
-      for (let message of data.error) {
+      for (const message of data.error) {
         displayNotification(codename, 'warn', message)
       }
     } else if (has(data, 'info') && isArray(data.info)) {
-      for (let message of data.info) {
+      for (const message of data.info) {
         displayNotification(codename, 'info', message)
       }
     }
-  },
+  }
 }
