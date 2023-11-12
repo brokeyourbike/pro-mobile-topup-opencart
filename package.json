@@ -14,7 +14,7 @@
     "lint:fix": "standard --fix \"admin/view/javascript/pro_mobile_topup/src/**/*.js\""
   },
   "devDependencies": {
-    "axios": "^0.22.0",
+    "axios": "^1.6.0",
     "laravel-mix": "^6.0.31",
     "lodash": "^4.17.21",
     "sass": "^1.43.4",
